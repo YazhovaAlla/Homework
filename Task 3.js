@@ -21,7 +21,7 @@ function Animal(name) {
 
     this.animalFeed = function () {
         console.log('Насыпаем в миску ' + self.dailyNorm() + ' корма.');
-    };
+    }
 }
 
 function Cat() {
@@ -39,7 +39,6 @@ function Cat() {
         console.log('Гладим кота.') ;
         return this;
     }
-
 }
 
 var barsik = new Cat('Барсик');
