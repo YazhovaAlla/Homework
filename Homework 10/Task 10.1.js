@@ -1,6 +1,5 @@
 function Animal(name) {
-    var self = this;
-    self.name = name;
+    this.name = name;
 }
 
 var foodAmount = 50;
@@ -27,7 +26,7 @@ Animal.prototype.animalFeed = function () {
 
 
 function Cat() {
-    Animal.apply(this, arguments);
+    Animal.prototype.apply(this, arguments);
 }
     Cat.prototype = Object.create(Animal.prototype);
     Cat.prototype.constructor = Cat;
