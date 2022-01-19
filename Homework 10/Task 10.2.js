@@ -27,7 +27,6 @@ function deepClone(objectToClone) {
     }
     arrayOfKeys = Object.keys(objectToClone);
     for (let i of arrayOfKeys) {
-        // console.log(typeof objectToClone[i]);
         if (typeof objectToClone[i] !== 'object' && typeof objectToClone[i] !== 'undefined') {
             newObject[i] = objectToClone[i];
         } else if ( typeof objectToClone[i] !== 'undefined' && objectToClone[i] !== null) {
@@ -36,5 +35,10 @@ function deepClone(objectToClone) {
     }
     return newObject;
 }
-let clonedObject = deepClone(initialObj);
-console.log(clonedObject);
+let clonedObj = deepClone(initialObj);
+console.log(clonedObj);
+clonedObj.object.object2.array2[1].name = 'Vasya';
+clonedObj.array.push(2);
+
+console.log(initialObj);
+console.log(clonedObj);
