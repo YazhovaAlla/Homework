@@ -1,6 +1,6 @@
 var initialObj = {
     string: 'Vasya',
-    number: 30,
+    number: 18,
     boolean: true,
     undefined: undefined,
     null: null,
@@ -19,7 +19,7 @@ var initialObj = {
 
 var initialObj2 = {
     string: 'Vasya',
-    number: 18,
+    number: 30,
     boolean: true,
     undefined: undefined,
     null: null,
@@ -37,15 +37,54 @@ var initialObj2 = {
 };
 
 function objComplementarity(object1,object2) {
-    arrayOfKeys1 = Object.keys(object1);
-    arrayOfKeys2 = Object.keys(object2);
-    for (var i of arrayOfKeys1) {
-        if (object1[i] === object2[i] && typeof object1[i] !== 'object' &&
-            typeof object1[i] !== 'undefined') {
-            console.log('Объекты равны');
-        } else if ( object1[i] !=== object2[i] ) {
-            console.log('Объекты не равны');
+    var arrayOfKeys1 = Object.keys(object1);
+    var arrayOfKeys2 = Object.keys(object2);
+    var response = true;
+    if (arrayOfKeys1.length !== arrayOfKeys2.length) {
+        console.log('false');
+        console.log(arrayOfKeys1.length, arrayOfKeys2.length);
+        return false;
+    }
+
+    for (var i = 0; i < arrayOfKeys1.length; i++) {
+        if (arrayOfKeys1[i] !== arrayOfKeys2[i]) {
+            console.log('false1');
+            console.log(arrayOfKeys1[i], arrayOfKeys2[i]);
+            return false;
+        }
+
+        if (typeof object1[arrayOfKeys1[i]] !== 'undefined' && typeof object1[arrayOfKeys1[i]] !== 'object'
+        && typeof object1[arrayOfKeys1[i]] !== 'function') {
+            console.log(object1[arrayOfKeys1[i]], object2[arrayOfKeys2[i]]);
+
+            if (object1[arrayOfKeys1[i]] !== object2[arrayOfKeys2[i]]) {
+                console.log('false2');
+                console.log(object1[arrayOfKeys1[i]], object2[arrayOfKeys2[i]]);
+                return false;
+            }
+        } else if (typeof object1[arrayOfKeys1[i]] == 'function') {
+            console.log(object1[arrayOfKeys1[i]], object2[arrayOfKeys2[i]]);
+
+            if (object1[arrayOfKeys1[i]].toString() !== object2[arrayOfKeys2[i]].toString()) {
+                console.log('false3');
+                console.log(object1[arrayOfKeys1[i]].toString(), object2[arrayOfKeys2[i]].toString());
+                return false;
+            }
+        }
+        else if (typeof object1[arrayOfKeys1[i]] == 'object' &&  object1[arrayOfKeys1[i]] !== null &&
+             object1[arrayOfKeys1[i]] !== undefined) {
+            console.log(object1[arrayOfKeys1[i]], object2[arrayOfKeys2[i]]);
+
+            response = objComplementarity(object1[arrayOfKeys1[i]], object2[arrayOfKeys2[i]]);
+            if (response == false) {
+                console.log('false4');
+                return  false;
+            }
         }
     }
 
+    return  true;
 }
+console.log('Result of comparing: ' +  objComplementarity(initialObj, initialObj2));
+
+
