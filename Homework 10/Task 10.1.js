@@ -1,5 +1,6 @@
 function Animal(name) {
     this._foodAmount = 50;
+    this._name = name;
 }
 
 Animal.prototype._formatFoodAmount= function () {
@@ -18,22 +19,21 @@ Animal.prototype.dailyNorm = function (amount) {
     this._foodAmount = amount;
 }
 
-this.name = name;
 
-Animal.prototype.animalFeed = function () {
+Animal.prototype.feed = function () {
     console.log('Насыпаем в миску ' + this.dailyNorm() + ' корма.');
 }
 
 
-function Cat() {
+function Cat(name) {
     Animal.prototype.apply(this, arguments);
 }
 
 Cat.prototype = Object.create(Animal.prototype);
 Cat.prototype.constructor = Cat;
 
-var catFeed = Animal.prototype.animalFeed;
-Cat.prototype.animalFeed = function () {
+var catFeed = Animal.prototype.feed;
+Cat.prototype.feed = function () {
     catFeed();
     Cat.prototype.happy();
     return this;
@@ -49,6 +49,6 @@ Cat.prototype.stroke = function () {
 
 var barsik = new Cat('Барсик');
 // barsik.dailyNorm(75);
-// barsik.animalFeed();
+// barsik.feed();
 // barsik.dailyNorm(150);
-barsik.animalFeed().stroke().stroke().animalFeed();
+barsik.feed().stroke().stroke().feed();
