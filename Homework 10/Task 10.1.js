@@ -32,9 +32,8 @@ function Cat(name) {
 Cat.prototype = Object.create(Animal.prototype);
 Cat.prototype.constructor = Cat;
 
-var catFeed = Animal.prototype.feed;
 Cat.prototype.feed = function () {
-    catFeed();
+    Animal.prototype.feed.apply(this, arguments);
     Cat.prototype.happy();
     return this;
 };
