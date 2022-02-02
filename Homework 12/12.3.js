@@ -3,8 +3,8 @@ function checkM(text) {
     var mass = ['а', 'у', 'е', 'ы', 'о', 'э', 'я', 'и', 'ю', 'ё'];
     var result = textLowerCase
         .split('')
-        .reduce((res, element) => (mass.indexOf(element) !== -1 ? ++res : res), 0);
-    return result;
+        .filter(element => mass.indexOf(element) !== -1);
+    return result.length;
 }
 var str = prompt('Введите текст');
 console.log(checkM(str));
