@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>15.1</title>
+</head>
+<body>
+<button onclick="linksFinder()">Change links color and weight</button>
+<div id="container"></div>
+<script>
+    var firstParagraph = document.createElement('p');
+    firstParagraph.innerHTML = '<span>Привет <a href=""> Link1 </a> <a href=""> Link2 </a></span>';
+    var secondParagraph = document.createElement('p');
+    secondParagraph.innerHTML = '<span>Привет <a href=""> Link1 </a> <a href=""> Link2 </a></span>';
+    var container = document.getElementById('container');
+    container.appendChild(firstParagraph);
+    container.appendChild(secondParagraph);
+
+    function linksFinder() {
+        var firstLinks = firstParagraph.getElementsByTagName('a');
+        for (let i = 0; i < firstLinks.length; i++) {
+            firstLinks[i].style.color = "red";
+        }
+        for (let i = 0; i < firstLinks.length; i++) {
+            firstLinks[i].style.fontWeight = "bold";
+        }
+    }
+
+    var secondLinks = document.getElementsByTagName('a');
+    for (let i = 0; i < secondLinks.length; i++) {
+        secondLinks[i].addEventListener('click', function (event) {
+            event.preventDefault();
+            alert('Текст ссылки 1');
+        });
+    }
+    for (let i = 0; i < secondLinks.length; i++) {
+        secondLinks[i].addEventListener('click', function (event) {
+            event.preventDefault();
+            alert('Текст ссылки 2');
+        });
+    }
+
+</script>
+</body>
+</html>
