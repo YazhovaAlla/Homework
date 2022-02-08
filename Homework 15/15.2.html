@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-<table border="1">
+<table id="table" border="1" onclick="inputPast()">
     <tr>
         <td></td>
         <td></td>
@@ -48,13 +48,43 @@
         table.insertBefore(row, theFirstChild);
     });
 
-    var cell = document.getElementsByTagName('td');
-    for (let i = 0; i < cell.length; i++) {
-        cell.addEventListener('click', function () {
+    var table = document.getElementById('table');
+
+    table.onclick = function (event) {
+        var td = event.target;
+
+        if (td.tagName != 'TD') {
+            td = td.closest('td');
+        }
+
+        if (!table.contains(td)) return;
+        if (td.classList.contains('button')) return;
+        inputPast(td);
+    };
+
+    function inputPast(selectedTd) {
+        if (selectedTd) {
             var newInput = document.createElement('input');
-            cell.appendChild(newInput);
+            if (selectedTd.innerText != null) {
+                newInput.value = selectedTd.innerText;
+            }
+            selectedTd.innerText = null;
+            newInput.onblur = function (event) {
+                var text = event.target.value;
+                event.target.closest('td').innerHTML = text;
+            };
+            newInput.onkeydown = function (event) {
+                if (event.code == 'Enter') {
+                    event.target.onblur = null;
+                    var text = event.target.value;
+                    event.target.closest('td').innerHTML = text;
+
+                }
+            };
+            selectedTd.appendChild(newInput);
             newInput.focus();
-        });
+
+        }
     }
 
 </script>
