@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yazhova</title>
+    <style>
+        label {
+            font-weight: bold;
+            margin: 1em;
+        }
+
+        input {
+            margin: 1em;
+        }
+
+        button {
+            margin-left: 1em;
+        }
+    </style>
+</head>
+<body>
+<form name="registration" onsubmit="registerPost(); return false;">
+    <label>Email</label><br>
+    <input name="email" title="Email"/><br>
+    <label>Password</label><br>
+    <input name="password" type="password"/><br>
+    <button type="submit">Register</button>
+</form>
+<div id="error"></div>
+<script>
+    let userId = localStorage.getItem('userID');
+    if (userId) {
+        let loginForm = document.forms['registration'];
+        loginForm.style.visibility = 'hidden';
+        let error = document.getElementById('error');
+        error.innerText = "User (" + userId + ") has been successfully registered";
+    }
+
+
+    function registerPost() {
+        let loginForm = document.forms['registration'];
+
+        let data = {
+            email: loginForm.elements.email.value,
+            password: loginForm.elements.password.value
+        };
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://reqres.in/api/register', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
+        if (xhr.status != 200) {
+            loginForm.elements.email.value = '';
+            loginForm.elements.email.style.borderColor = 'red';
+            loginForm.elements.password.value = '';
+            loginForm.elements.password.style.borderColor = 'red';
+
+            let error = document.getElementById('error');
+            error.innerText = JSON.parse(xhr.response).error;
+        } else {
+            let userID = JSON.parse(xhr.response).id;
+            localStorage.setItem('userID', userID);
+            loginForm.style.visibility = 'hidden';
+            let error = document.getElementById('error');
+            error.innerText = "User (" + userID + ") has been successfully registered";
+        }
+        return false;
+    }
+
+</script>
+</body>
+</html>
